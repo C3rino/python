@@ -147,7 +147,7 @@ def order_result(inserted_money, chosen_drink):
         return 999
 
 
-# Asks user if he wants another drink and in case that not terminates program.
+# Asks user if he wants another drink and if user input is 'n' then terminates program.
 def should_end_func():
     end = input("Do you want to order another drink? (type 'n' if not): ").lower()
     if end == "n":
