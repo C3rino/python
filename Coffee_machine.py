@@ -68,60 +68,14 @@ def insert_coins():
     return money_inserted
 
 
-# Checks if water supply is sufficient.
-def water_check(order_check):
-    if order_check == "espresso":
-        if resources["water"] >= MENU["espresso"]["ingredients"]["water"]:
+# Checks whether resources are sufficient
+def resources_sufficent(order_check):
+    given_resource = MENU[order_check]["ingredients"]
+    for resource in given_resource:
+        if resources[resource] >= given_resource[resource]:
             return 0
         else:
-            return 999
-    elif order_check == "latte":
-        if resources["water"] >= MENU["latte"]["ingredients"]["water"]:
-            return 0
-        else:
-            return 999
-    elif order_check == "cappuccino":
-        if resources["water"] >= MENU["cappuccino"]["ingredients"]["water"]:
-            return 0
-        else:
-            return 999
-    
-
-# Checks if milk supply is sufficient.
-def milk_check(order_check):
-    if order_check == "espresso":
-        if resources["milk"] >= MENU["espresso"]["ingredients"]["milk"]:
-            return 0
-        else:
-            return 999
-    elif order_check == "latte":
-        if resources["milk"] >= MENU["latte"]["ingredients"]["milk"]:
-            return 0
-        else:
-            return 999
-    elif order_check == "cappuccino":
-        if resources["milk"] >= MENU["cappuccino"]["ingredients"]["milk"]:
-            return 0
-        else:
-            return 999
-
-
-# Checks if coffee supply is sufficient.
-def coffee_check(order_check):
-    if order_check == "espresso":
-        if resources["coffee"] >= MENU["espresso"]["ingredients"]["coffee"]:
-            return 0
-        else:
-            return 999
-    elif order_check == "latte":
-        if resources["coffee"] >= MENU["latte"]["ingredients"]["coffee"]:
-            return 0
-        else:
-            return 999
-    elif order_check == "cappuccino":
-        if resources["coffee"] >= MENU["cappuccino"]["ingredients"]["coffee"]:
-            return 0
-        else:
+            print(f"There is not enough {resource}")
             return 999
 
 
@@ -147,7 +101,7 @@ def order_result(inserted_money, chosen_drink):
         return 999
 
 
-# Asks user if he wants another drink and if user input is 'n' then terminates program.
+# Asks user if he wants another drink and in case that not terminates program.
 def should_end_func():
     end = input("Do you want to order another drink? (type 'n' if not): ").lower()
     if end == "n":
@@ -156,7 +110,7 @@ def should_end_func():
         return False
         
 
-# Uses "while" condition to decide when to terminate program. Checks user order and calls coresponding functions to check resources, refunds inserted money, completes order and decides whether terminate program. Checks for maintence command "report" to show available resources and checks for maintence command "off" to terminate program.
+# Uses "while" condition to decide when to terminate program. Checks user order and calls coresponding function to check resources, refunds inserted money, completes order and decides whether terminate program. Checks for maintence command "report" to show available resources and checks for maintence command "off" to terminate program.
 should_end = False
 while should_end == False:
     print("\nWelcome to COFFEE MACHINE!")
@@ -168,59 +122,16 @@ while should_end == False:
     order = input("What would you like? (espresso/latte/cappuccino): ").lower()
     if order == "report":
         report()
-    elif order == "espresso":
-        if water_check(order) == 0:
-            if milk_check(order) == 0:
-                if coffee_check(order) == 0:
-                    money_inserted_by_user = insert_coins()
-                    finall_result = order_result(money_inserted_by_user, order)
-                    if finall_result == 0:
-                        update_resources(order)
-                    should_end = should_end_func()
-                else:
-                    print("Sorry there is not enough coffee.")
-                    should_end = should_end_func()
+    elif order == "espresso" or order == "latte" or order == "cappuccino":
+        if resources_sufficent(order) == 0:
+            money_inserted_by_user = insert_coins()
+            finall_result = order_result(money_inserted_by_user, order)
+            if finall_result == 0:
+                update_resources(order)
+                should_end = should_end_func()
             else:
-                print("Sorry there is not enough milk.")
                 should_end = should_end_func()
         else:
-            print("Sorry there is not enough water.")
-            should_end = should_end_func()
-    elif order == "latte":
-        if water_check(order) == 0:
-            if milk_check(order) == 0:
-                if coffee_check(order) == 0:
-                    money_inserted_by_user = insert_coins()
-                    finall_result = order_result(money_inserted_by_user, order)
-                    if finall_result == 0:
-                        update_resources(order)
-                    should_end = should_end_func()
-                else:
-                    print("Sorry there is not enough coffee.")
-                    should_end = should_end_func()
-            else:
-                print("Sorry there is not enough milk.")
-                should_end = should_end_func()
-        else:
-            print("Sorry there is not enough water.")
-            should_end = should_end_func()
-    elif order == "cappuccino":
-        if water_check(order) == 0:
-            if milk_check(order) == 0:
-                if coffee_check(order) == 0:
-                    money_inserted_by_user = insert_coins()
-                    finall_result = order_result(money_inserted_by_user, order)
-                    if finall_result == 0:
-                        update_resources(order)
-                    should_end = should_end_func()
-                else:
-                    print("Sorry there is not enough coffee.")
-                    should_end = should_end_func()
-            else:
-                print("Sorry there is not enough milk.")
-                should_end = should_end_func()
-        else:
-            print("Sorry there is not enough water.")
             should_end = should_end_func()
     elif order == "off":
         should_end = True
