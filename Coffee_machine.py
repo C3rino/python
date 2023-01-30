@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Assignment come from "100 Days of Code: The Complete Python Pro Bootcamp for 2023": https://www.udemy.com/course/100-days-of-code/ 
+# Assignment comes from "100 Days of Code: The Complete Python Pro Bootcamp for 2023": https://www.udemy.com/course/100-days-of-code/ 
 
 
 # Contains drinks MENU with ingredients and costs.
@@ -110,7 +110,7 @@ def should_end_func():
         return False
         
 
-# Uses "while" condition to decide when to terminate program. Checks user order and calls coresponding function to check resources, refunds inserted money, completes order and decides whether terminate program. Checks for maintence command "report" to show available resources and checks for maintence command "off" to terminate program.
+# Uses "while" condition to decide when to terminate program. Checks user order and calls coresponding function to check resources, refunds inserted money, completes order and decides whether terminate program. Checks for maintenance command "report" to show available resources and checks for maintenance command "off" to terminate program.
 should_end = False
 while should_end == False:
     print("\nWelcome to COFFEE MACHINE!")
